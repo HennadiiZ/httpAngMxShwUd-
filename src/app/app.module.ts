@@ -26,3 +26,5 @@ export class AppModule {}
 // 258. Using Types with the HttpClient
 
 // 259. Outputting Posts
+
+// 260. Showing a Loading Indicator

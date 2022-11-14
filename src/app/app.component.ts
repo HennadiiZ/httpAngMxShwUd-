@@ -10,6 +10,7 @@ import { Post } from './post.model';
 })
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
+  isLoading = false;
 
   LINK = 'https://httpangmxshwud-default-rtdb.firebaseio.com/'; // starting point
   endpoint = 'posts.json'; // end point
@@ -17,10 +18,12 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.fetchPosts().subscribe(posts => {
-      this.loadedPosts = posts;
-      console.log('posts',posts);
-    });;
+    this.fetchPosts()
+    // .subscribe(posts => {
+    //   this.loadedPosts = posts;
+    //   console.log('posts',posts);
+    //   this.isLoading = false;
+    // });;
   }
 
   onCreatePost(postData: { title: string; content: string }) {
@@ -43,8 +46,8 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts() {
-
-    return this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
+    this.isLoading = true;
+    this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
     // .pipe(map((responseData: {[key: string]: Post})=> {
     .pipe(map((responseData)=> {
       const postsArray: Post[] = [];
@@ -54,12 +57,15 @@ export class AppComponent implements OnInit {
           postsArray.push({ ...responseData[key], id: key });
         }
       }
+      this.isLoading = false;
       return postsArray;
     })
     )
-    // .subscribe(posts => {
-    //   // console.log(posts[0].);
-    //   console.log(posts); // {-NGqUXPm10Q8KSvWfcPJ: {…}, -NGq_rxEYjb_Ll3-YMu0: {…}, -NGqaarVTecKANzA0pyo: {…}, -NGqakIcsJ9id9_vbqpb: {…}, -NGqaoXxhXyUVR20-4b6: {…}, …}
-    // });
+    .subscribe(posts => {
+      this.isLoading = false;
+      this.loadedPosts = posts;
+      // console.log(posts[0].);
+      console.log(posts); // {-NGqUXPm10Q8KSvWfcPJ: {…}, -NGq_rxEYjb_Ll3-YMu0: {…}, -NGqaarVTecKANzA0pyo: {…}, -NGqakIcsJ9id9_vbqpb: {…}, -NGqaoXxhXyUVR20-4b6: {…}, …}
+    });
   }
 }
