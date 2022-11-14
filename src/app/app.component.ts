@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     // Send Http request
     console.log(postData); // {title: '7', content: '8'}
 
-    this.http.post(`${this.LINK}${this.endpoint}`, postData)
+    this.http.post<{ name: string }>(`${this.LINK}${this.endpoint}`, postData)
       .subscribe(data => {
         console.log(data); // {name: '-NGqaoXxhXyUVR20-4b6'}
       });
@@ -41,8 +41,9 @@ export class AppComponent implements OnInit {
 
   private fetchPosts() {
 
-    this.http.get(`${this.LINK}${this.endpoint}`)
-    .pipe(map((responseData: {[key: string]: Post})=> {
+    this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
+    // .pipe(map((responseData: {[key: string]: Post})=> {
+    .pipe(map((responseData)=> {
       const postsArray: Post[] = [];
 
       for (const key in responseData) {
@@ -51,7 +52,8 @@ export class AppComponent implements OnInit {
         }
       }
       return postsArray;
-    }))
+    })
+    )
     .subscribe(posts => {
       // console.log(posts[0].);
       console.log(posts); // {-NGqUXPm10Q8KSvWfcPJ: {…}, -NGq_rxEYjb_Ll3-YMu0: {…}, -NGqaarVTecKANzA0pyo: {…}, -NGqakIcsJ9id9_vbqpb: {…}, -NGqaoXxhXyUVR20-4b6: {…}, …}
