@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -41,8 +42,9 @@ export class AppComponent implements OnInit {
   private fetchPosts() {
 
     this.http.get(`${this.LINK}${this.endpoint}`)
-    .pipe(map(responseData => {
-      const postsArray = [];
+    .pipe(map((responseData: {[key: string]: Post})=> {
+      const postsArray: Post[] = [];
+
       for (const key in responseData) {
         if ( responseData.hasOwnProperty(key)) {
           postsArray.push({ ...responseData[key], id: key });
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit {
       return postsArray;
     }))
     .subscribe(posts => {
+      // console.log(posts[0].);
       console.log(posts); // {-NGqUXPm10Q8KSvWfcPJ: {…}, -NGq_rxEYjb_Ll3-YMu0: {…}, -NGqaarVTecKANzA0pyo: {…}, -NGqakIcsJ9id9_vbqpb: {…}, -NGqaoXxhXyUVR20-4b6: {…}, …}
     });
 

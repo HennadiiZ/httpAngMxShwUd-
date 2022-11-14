@@ -22,3 +22,5 @@ export class AppModule {}
 // 256. GETting Data
 
 // 257. Using RxJS Operators to Transform Response Data
+
+// 258. Using Types with the HttpClient
