@@ -24,3 +24,5 @@ export class AppModule {}
 // 257. Using RxJS Operators to Transform Response Data
 
 // 258. Using Types with the HttpClient
+
+// 259. Outputting Posts
