@@ -28,3 +28,5 @@ export class AppModule {}
 // 259. Outputting Posts
 
 // 260. Showing a Loading Indicator
+
+// 261. Using a Service for Http Requests
