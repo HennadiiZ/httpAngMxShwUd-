@@ -18,3 +18,5 @@ export class AppModule {}
 
 
 // 255. Sending a POST Request
+
+// 256. GETting Data
