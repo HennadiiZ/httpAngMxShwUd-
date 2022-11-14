@@ -9,13 +9,21 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   loadedPosts = [];
 
+  LINK = 'https://httpangmxshwud-default-rtdb.firebaseio.com/'; // starting point
+  endpoint = 'posts.json'; // end point
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {}
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
-    console.log(postData);
+    console.log(postData); // {title: '7', content: '8'}
+
+    this.http.post(`${this.LINK}${this.endpoint}`, postData)
+      .subscribe(data => {
+        console.log(data); // {name: '-NGqaoXxhXyUVR20-4b6'}
+      });
   }
 
   onFetchPosts() {
