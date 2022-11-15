@@ -60,8 +60,13 @@ export class AppComponent implements OnInit {
       this.loadedPosts = posts;
       console.log(posts);
     }, (error: HttpErrorResponse) => {
+      this.isLoading = false;
       this.error = error.error.error;
       console.error('error',error);
     });
+  }
+
+  onHandleError():void {
+    this.error = null;
   }
 }
