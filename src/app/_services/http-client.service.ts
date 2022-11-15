@@ -25,6 +25,8 @@ export class HttpClientService {
 
   onClearPosts() {
     // Send Http request
+    // return this.http.delete<Post>(`${this.LINK}${this.endpoint}${id}`);
+    return this.http.delete<Post>(`${this.LINK}${this.endpoint}`);
   }
 
   private fetchPosts() {
