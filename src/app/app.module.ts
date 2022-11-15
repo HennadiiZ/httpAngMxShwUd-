@@ -46,3 +46,5 @@ export class AppModule {}
 // 268. Setting Headers
 
 // 269. Adding Query Params
+
+// 270. Observing Different Types of Responses

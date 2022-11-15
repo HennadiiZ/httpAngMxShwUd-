@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Post } from '../post.model';
 
 @Injectable({
@@ -17,7 +17,15 @@ export class HttpClientService {
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
     console.log(postData); // {title: '7', content: '8'}
-    return this.http.post<{ name: string }>(`${this.LINK}${this.endpoint}`, postData)
+    // return this.http.post<{ name: string }>(`${this.LINK}${this.endpoint}`, postData)
+    return this.http.post<{ name: string }>(
+      `${this.LINK}${this.endpoint}`,
+      postData,
+      {
+        // observe: 'body' // {name: '-NGvmgM0Qut5prBksY2b'}
+        observe: 'response' // HttpResponse {headers: HttpHeaders, status: 200, statusText: 'OK', url: 'https://httpangmxshwud-default-rtdb.firebaseio.com/posts.json', ok: true, …}
+      }
+    )
   }
 
   onFetchPosts() {
@@ -28,7 +36,27 @@ export class HttpClientService {
   onClearPosts() {
     // Send Http request
     // return this.http.delete<Post>(`${this.LINK}${this.endpoint}${id}`);
-    return this.http.delete<Post>(`${this.LINK}${this.endpoint}`);
+
+    // return this.http.delete<Post>(`${this.LINK}${this.endpoint}`);
+
+    return this.http.delete<Post>(
+      `${this.LINK}${this.endpoint}`,
+      {
+        // observe: 'body'
+        // observe: 'response'
+        observe: 'events'
+      }).pipe(
+      tap((event: any) => {
+                            // {type: 0}
+        console.log(event); // HttpResponse {headers: HttpHeaders, status: 200, statusText: 'OK', url: 'https://httpangmxshwud-default-rtdb.firebaseio.com/posts.json', ok: true, …}
+        if( event.type === HttpEventType.Sent ) {
+
+        }
+        if( event.type === HttpEventType.Response ) {
+          console.log(event.body);
+        }
+      })
+    );
   }
 
   private fetchPosts() {

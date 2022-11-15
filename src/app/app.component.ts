@@ -28,7 +28,8 @@ export class AppComponent implements OnInit {
 
     this.httpClientService.onCreatePost(postData)
       .subscribe(data => {
-        console.log(data);
+        console.log('+++',data);
+        console.log('+++',data.body);
         this.onFetchPosts();
       });
   }
