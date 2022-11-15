@@ -33,11 +33,16 @@ export class HttpClientService {
 
   private fetchPosts() {
     // return this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('way', 'yawn');
+
     return this.http.get<{ [key: string]: Post }>(
       `${this.LINK}${this.endpoint}`,
       {
         headers: new HttpHeaders({'Custom-Header': 'Hello'}),
-        params: new HttpParams().set('print', 'pretty')
+        // params: new HttpParams().set('print', 'pretty')
+        params: searchParams
       }
     )
     .pipe(
