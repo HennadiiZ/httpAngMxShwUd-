@@ -5,9 +5,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AuthInterceptorService } from './auth-interceptor';
+import { LoggingInterceptor } from './logging.interceptor';
 
 const INTERCEPTORS = [
-  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+  {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}
 ]
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +18,11 @@ const INTERCEPTORS = [
   //   {
   //     provide: HTTP_INTERCEPTORS,
   //     useClass: AuthInterceptorService,
+  //     multi: true
+  //   },
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: LoggingInterceptor,
   //     multi: true
   //   }
   // ],
@@ -67,3 +74,5 @@ export class AppModule {}
 // 273. Manipulating Request Objects
 
 // 274. Response Interceptors
+
+// 275. Multiple Interceptors
