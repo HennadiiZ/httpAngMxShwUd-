@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Post } from './post.model';
 import { HttpClientService } from './_services/http-client.service';
@@ -12,6 +12,7 @@ import { HttpClientService } from './_services/http-client.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isLoading = false;
+  error = null;
 
   // LINK = 'https://httpangmxshwud-default-rtdb.firebaseio.com/'; // starting point
   // endpoint = 'posts.json'; // end point
@@ -19,12 +20,7 @@ export class AppComponent implements OnInit {
   constructor(private httpClientService: HttpClientService) {}
 
   ngOnInit() {
-    this.onFetchPosts()
-    // .subscribe(posts => {
-    //   this.loadedPosts = posts;
-    //   console.log('posts',posts);
-    //   this.isLoading = false;
-    // });;
+    this.onFetchPosts();
   }
 
   onCreatePost(postData: { title: string; content: string }) {
@@ -38,7 +34,6 @@ export class AppComponent implements OnInit {
   }
 
   onClearPosts() {
-    // Send Http request
     this.isLoading = true;
     this.httpClientService.onClearPosts()
     .subscribe(
@@ -52,11 +47,21 @@ export class AppComponent implements OnInit {
   onFetchPosts() {
     this.isLoading = true;
 
+    // this.httpClientService.onFetchPosts()
+    // .subscribe(posts => {
+    //   this.isLoading = false;
+    //   this.loadedPosts = posts;
+    //   console.log(posts);
+    // });
+
     this.httpClientService.onFetchPosts()
     .subscribe(posts => {
       this.isLoading = false;
       this.loadedPosts = posts;
       console.log(posts);
+    }, (error: HttpErrorResponse) => {
+      this.error = error.error.error;
+      console.error('error',error);
     });
   }
 }
