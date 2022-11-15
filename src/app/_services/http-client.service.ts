@@ -16,7 +16,7 @@ export class HttpClientService {
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
-    console.log(postData); // {title: '7', content: '8'}
+    // console.log(postData); // {title: '7', content: '8'}
     // return this.http.post<{ name: string }>(`${this.LINK}${this.endpoint}`, postData)
     return this.http.post<{ name: string }>(
       `${this.LINK}${this.endpoint}`,
@@ -51,12 +51,12 @@ export class HttpClientService {
       }).pipe(
       tap((event: any) => {
                             // {type: 0}
-        console.log(event); // HttpResponse {headers: HttpHeaders, status: 200, statusText: 'OK', url: 'https://httpangmxshwud-default-rtdb.firebaseio.com/posts.json', ok: true, …}
+        // console.log(event); // HttpResponse {headers: HttpHeaders, status: 200, statusText: 'OK', url: 'https://httpangmxshwud-default-rtdb.firebaseio.com/posts.json', ok: true, …}
         if( event.type === HttpEventType.Sent ) {
 
         }
         if( event.type === HttpEventType.Response ) {
-          console.log(event.body);
+          // console.log(event.body);
         }
       })
     );

@@ -1,14 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { AuthInterceptorService } from './auth-interceptor';
 
+const INTERCEPTORS = [
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+]
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule],
-  providers: [],
+  // providers: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: AuthInterceptorService,
+  //     multi: true
+  //   }
+  // ],
+  providers: [INTERCEPTORS],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
@@ -50,3 +61,5 @@ export class AppModule {}
 // 270. Observing Different Types of Responses
 
 // 271. Changing the Response Body Type
+
+// 272. Introducing Interceptors

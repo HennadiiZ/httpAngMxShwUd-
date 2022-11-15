@@ -24,12 +24,12 @@ export class AppComponent implements OnInit {
   }
 
   onCreatePost(postData: { title: string; content: string }) {
-    console.log(postData);
+    // console.log(postData);
 
     this.httpClientService.onCreatePost(postData)
       .subscribe(data => {
-        console.log('+++',data);
-        console.log('+++',data.body);
+        // console.log('+++',data);
+        // console.log('+++',data.body);
         this.onFetchPosts();
       });
   }
@@ -59,11 +59,11 @@ export class AppComponent implements OnInit {
     .subscribe(posts => {
       this.isLoading = false;
       this.loadedPosts = posts;
-      console.log(posts);
+      // console.log(posts);
     }, (error: HttpErrorResponse) => {
       this.isLoading = false;
       this.error = error.error.error;
-      console.error('error',error);
+      // console.error('error',error);
     });
   }
 
