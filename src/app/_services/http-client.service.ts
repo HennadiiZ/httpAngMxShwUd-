@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -32,7 +32,13 @@ export class HttpClientService {
   }
 
   private fetchPosts() {
-    return this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
+    // return this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
+    return this.http.get<{ [key: string]: Post }>(
+      `${this.LINK}${this.endpoint}`,
+      {
+        headers: new HttpHeaders({'Custom-Header': 'Hello'})
+      }
+    )
     .pipe(
       map((responseData)=> {
         const postsArray: Post[] = [];
