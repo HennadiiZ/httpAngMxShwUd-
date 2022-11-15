@@ -48,3 +48,5 @@ export class AppModule {}
 // 269. Adding Query Params
 
 // 270. Observing Different Types of Responses
+
+// 271. Changing the Response Body Type

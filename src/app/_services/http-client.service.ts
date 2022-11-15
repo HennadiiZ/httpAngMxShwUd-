@@ -44,7 +44,10 @@ export class HttpClientService {
       {
         // observe: 'body'
         // observe: 'response'
-        observe: 'events'
+        observe: 'events',
+        // responseType: 'blob' // for files
+        // responseType: 'text'
+        responseType: 'json' // default
       }).pipe(
       tap((event: any) => {
                             // {type: 0}
