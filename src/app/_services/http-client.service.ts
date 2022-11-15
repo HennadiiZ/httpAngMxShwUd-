@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Post } from '../post.model';
 
 @Injectable({
@@ -9,6 +10,7 @@ import { Post } from '../post.model';
 export class HttpClientService {
   LINK = 'https://httpangmxshwud-default-rtdb.firebaseio.com/'; // starting point
   endpoint = 'posts.json'; // end point
+  errorSubject = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -31,16 +33,21 @@ export class HttpClientService {
 
   private fetchPosts() {
     return this.http.get<{ [key: string]: Post }>(`${this.LINK}${this.endpoint}`)
-    .pipe(map((responseData)=> {
-      const postsArray: Post[] = [];
+    .pipe(
+      map((responseData)=> {
+        const postsArray: Post[] = [];
 
-      for (const key in responseData) {
-        if ( responseData.hasOwnProperty(key)) {
-          postsArray.push({ ...responseData[key], id: key });
+        for (const key in responseData) {
+          if ( responseData.hasOwnProperty(key)) {
+            postsArray.push({ ...responseData[key], id: key });
+          }
         }
-      }
-      return postsArray;
-    })
+        return postsArray;
+      },
+      catchError(errorRes => {
+        return throwError(errorRes);
+      })
+      )
     )
   }
 }

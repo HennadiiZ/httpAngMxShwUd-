@@ -36,3 +36,7 @@ export class AppModule {}
 // 263. Sending a DELETE Request
 
 // 264. Handling Errors
+
+// 265. Using Subjects for Error Handling
+
+// 266. Using the catchError Operator
